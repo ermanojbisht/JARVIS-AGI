@@ -11,3 +11,8 @@ opencv-python==4.9.0.80
 pvporcupine==1.9.5
 pygame==2.5.2
 webscout==2.9
+
+aiohttp==3.9.5
+aiofiles==23.2.1
+pillow==10.3.0
+webscout['Local']

@@ -50,6 +50,7 @@ class DeepSeekAPI:
             - deepseek_code
         """
         request_payload = {
+            #"message": f"[Instructions: {system_prompt}]\n\nUser Query:{user_message}",
             "message": user_message,
             "stream": True,
             "model_preference": None,
@@ -64,10 +65,21 @@ class DeepSeekAPI:
             if response_line:
                 cleaned_line = re.sub("data:", "", response_line)
                 response_json = json.loads(cleaned_line)
-                response_content = response_json['choices'][0]['delta']['content']
-                if response_content and not re.match(r'^\s{5,}$', response_content):
-                    if verbose: print(response_content, end="", flush=True)
-                    combined_response += response_content
+
+                # Safely access the content only if it exists
+                if 'choices' in response_json and 'delta' in response_json['choices'][0]:
+                    delta = response_json['choices'][0]['delta']
+                    if 'content' in delta:
+                        response_content = delta['content']
+                        if response_content and not re.match(r'^\s{5,}$', response_content):
+                            if verbose: print(response_content, end="", flush=True)
+                            combined_response += response_content
+
+
+                # response_content = response_json['choices'][0]['delta']['content']
+                # if response_content and not re.match(r'^\s{5,}$', response_content):
+                #     if verbose: print(response_content, end="", flush=True)
+                #     combined_response += response_content
 
         return combined_response
 

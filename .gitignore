@@ -1,1 +1,16 @@
 .env
+venv/
+ASSETS/Vosk/vosk-*
+ASSETS/Vosk/vosk*/
+ASSETS/Vosk/vosk-model-hi-0.22/
+ASSETS/Vosk/vosk-model-small-hi-0.22
+ASSETS/Vosk/vosk-model-small-hi-0.22/
+ASSETS/Vosk/vosk-model-small-hi-0.22/*
+chromedriver-linux64
+*.pyc
+conversation_history.json
+ASSETS/conversation_history.json
+output_audio.mp3
+ASSETS/available_working_proxies.txt
+ASSETS/Vosk/
+ASSETS/Vosk

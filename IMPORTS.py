@@ -10,7 +10,8 @@ import os
 from ENGINE.STT.DevsDoCode import SpeechToTextListener
 
 # from ENGINE.TTS.hearling import Partial_Async_HearlingAudioGenerator
-from ENGINE.TTS.DeepGram import speak
+#from ENGINE.TTS.DeepGram import speak
+from ENGINE.TTS.speechify import speak
 # from ENGINE.TTS.edge_tts import speak
 # from ENGINE.TTS.deepAI import speak
 # from ENGINE.TTS.ai_voice import speak, initiate_proxies
@@ -43,7 +44,7 @@ from TOOLS import Alpaca_DS_Converser, RawDog
 """----------------------------------------------------------------------------------------------INITIALIZATION-------------------------------------------------------------------"""
 
 listener = SpeechToTextListener(language="en-IN")
-history_manager = Alpaca_DS_Converser.ConversationHistoryManager()
+history_manager = Alpaca_DS_Converser.ConversationHistoryManager(history_offset=700)
 ai_model = deepseek_ai.DeepSeekAPI()
 # taskExecutor = RawDog.TaskExecutor()
 # engine = Partial_Async_HearlingAudioGenerator()

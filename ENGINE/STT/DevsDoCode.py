@@ -10,7 +10,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-# import os
+from selenium.webdriver.chrome.service import Service
+import os
 
 class SpeechToTextListener:
     """A class for performing speech-to-text using a web-based service."""
@@ -29,7 +30,20 @@ class SpeechToTextListener:
         self.chrome_options.add_argument("--use-fake-ui-for-media-stream")
         self.chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
         self.chrome_options.add_argument("--headless=new")
-        self.driver = webdriver.Chrome(options=self.chrome_options)
+        # Specify the path to the ChromeDriver
+        chrome_driver_path = "chromedriver-linux64/chromedriver"
+
+        # Create a Service object with the ChromeDriver path
+        service = Service(executable_path=chrome_driver_path)
+
+        # Initialize the WebDriver with the specified options and service
+        self.driver = webdriver.Chrome(service=service, options=self.chrome_options)
+
+        #self.driver = webdriver.Chrome(options=self.chrome_options)
+        # self.driver = webdriver.Chrome(
+        #     executable_path="/home/manoj/Downloads/chromedriver_linux64 (2)/chromedriver",
+        #     options=self.chrome_options
+        # )
         self.wait = WebDriverWait(self.driver, wait_time)
         print("Made By ❤️ @DevsDoCode")
 
