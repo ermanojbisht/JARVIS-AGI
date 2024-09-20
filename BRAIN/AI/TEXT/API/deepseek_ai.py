@@ -32,7 +32,7 @@ class DeepSeekAPI:
         clear_response = self.api_session.post(f'{self.api_base_url}/clear_context', json=clear_payload)
         clear_response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
 
-    def generate(self, user_message: str, response_temperature: float = 1.0, model_type: Optional[str] = "deepseek_chat", verbose: bool = False) -> str:
+    def generate(self, user_message: str, response_temperature: float = 1.0, model_type: Optional[str] = "deepseek_chat", verbose: bool = False, system_prompt: Optional[str] = "Be Short & Concise") -> str:
         """
         Generates a response from the DeepSeek API based on the provided message.
 
@@ -41,6 +41,7 @@ class DeepSeekAPI:
             response_temperature (float, optional): The creativity level of the response. Defaults to 1.0.
             model_type (str, optional): The model class to be used for the chat session.
             verbose (bool, optional): Whether to print the response content. Defaults to False.
+            system_prompt (str, optional): The system prompt to be used. Defaults to "Be Short & Concise".
 
         Returns:
             str: The concatenated response content received from the API.
@@ -50,8 +51,7 @@ class DeepSeekAPI:
             - deepseek_code
         """
         request_payload = {
-            #"message": f"[Instructions: {system_prompt}]\n\nUser Query:{user_message}",
-            "message": user_message,
+            "message": f"[Instructions: {system_prompt}]\n\nUser Query:{user_message}",
             "stream": True,
             "model_preference": None,
             "model_class": model_type,
@@ -65,21 +65,10 @@ class DeepSeekAPI:
             if response_line:
                 cleaned_line = re.sub("data:", "", response_line)
                 response_json = json.loads(cleaned_line)
-
-                # Safely access the content only if it exists
-                if 'choices' in response_json and 'delta' in response_json['choices'][0]:
-                    delta = response_json['choices'][0]['delta']
-                    if 'content' in delta:
-                        response_content = delta['content']
-                        if response_content and not re.match(r'^\s{5,}$', response_content):
-                            if verbose: print(response_content, end="", flush=True)
-                            combined_response += response_content
-
-
-                # response_content = response_json['choices'][0]['delta']['content']
-                # if response_content and not re.match(r'^\s{5,}$', response_content):
-                #     if verbose: print(response_content, end="", flush=True)
-                #     combined_response += response_content
+                response_content = response_json['choices'][0]['delta']['content']
+                if response_content and not re.match(r'^\s{5,}$', response_content):
+                    if verbose: print(response_content, end="", flush=True)
+                    combined_response += response_content
 
         return combined_response
 
