@@ -1,4 +1,5 @@
 .env
+env/
 venv/
 ASSETS/Vosk/vosk-*
 ASSETS/Vosk/vosk*/
@@ -7,6 +8,7 @@ ASSETS/Vosk/vosk-model-small-hi-0.22
 ASSETS/Vosk/vosk-model-small-hi-0.22/
 ASSETS/Vosk/vosk-model-small-hi-0.22/*
 chromedriver-linux64
+chromedriver
 *.pyc
 conversation_history.json
 ASSETS/conversation_history.json

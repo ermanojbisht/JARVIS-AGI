@@ -31,7 +31,7 @@ class SpeechToTextListener:
         self.chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
         self.chrome_options.add_argument("--headless=new")
         # Specify the path to the ChromeDriver
-        chrome_driver_path = "chromedriver-linux64/chromedriver"
+        chrome_driver_path = "chromedriver\chromedriver.exe"
 
         # Create a Service object with the ChromeDriver path
         service = Service(executable_path=chrome_driver_path)
